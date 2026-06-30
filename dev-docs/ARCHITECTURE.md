@@ -54,8 +54,8 @@ React SPA with one page per major view (Login, OrderList, OrderDetail/Create, Pi
 
 ```mermaid
 erDiagram
-    EMPLOYEE ||--o{ ORDER : "takes (EmployeeId)"
-    EMPLOYEE ||--o{ ORDER : "delivers (DeliveryEmployeeId)"
+    EMPLOYEE ||--o{ ORDER : "takes EmployeeId"
+    EMPLOYEE ||--o{ ORDER : "delivers DeliveryEmployeeId"
     ORDER ||--o{ PIZZA : contains
     SIZE ||--o{ PIZZA : "sized as"
     CHEESE_OPTION ||--o{ PIZZA : "topped with"
