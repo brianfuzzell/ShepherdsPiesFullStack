@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ShepherdsPiesControllers.Data;
+using ShepherdsPiesControllers.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,14 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<ShepherdsPiesDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ShepherdsPiesDbConnectionString")));
+
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IPizzaRepository, PizzaRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<ISizeRepository, SizeRepository>();
+builder.Services.AddScoped<ICheeseOptionRepository, CheeseOptionRepository>();
+builder.Services.AddScoped<ISauceOptionRepository, SauceOptionRepository>();
+builder.Services.AddScoped<IToppingRepository, ToppingRepository>();
 
 var app = builder.Build();
 

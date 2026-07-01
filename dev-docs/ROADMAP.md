@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-01 -->
-<!-- Last change: Marked Step 3 (Domain models, migrations, and seed data) complete: EF Core models for Size, CheeseOption, SauceOption, Topping, Employee (IdentityUser), Order, Pizza, PizzaTopping; Order's two Employee FKs configured via Fluent API with Restrict delete; DomainModelsAndSeedData migration applied and verified against local PostgreSQL -->
+<!-- Last change: Marked Step 4 (Repository layer) complete: IOrderRepository, IPizzaRepository, IEmployeeRepository, and lookup repositories (Size, CheeseOption, SauceOption, Topping) implemented as async methods against ShepherdsPiesDbContext, registered in Program.cs DI container -->
 
 # Shepherd's Pies - Implementation Roadmap
 
@@ -31,7 +31,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** the migrations have run, **When** you query the database directly, **Then** the lookup tables (Size, CheeseOption, SauceOption, Topping) are populated with the values specified in the PRD's business logic section.
   - **Given** the `Order` table, **When** you inspect its schema, **Then** it has two distinct nullable-where-appropriate foreign keys to `Employee` (order-taker required, delivery employee nullable).
 
-- [ ] **Step 4: Repository layer**
+- [x] **Step 4: Repository layer**
   Implement `IOrderRepository`, `IPizzaRepository`, `IEmployeeRepository`, and simple read repositories for the lookup tables, per the method signatures in ARCHITECTURE.md (e.g. `GetByDate`, `GetById` with pizzas included, `Add`, `Update`, `Cancel`). Each implementation takes the injected `DbContext`; no controller touches `DbContext` directly.
 
   **Acceptance Criteria**:
