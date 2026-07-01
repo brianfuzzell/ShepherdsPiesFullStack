@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-06-30 -->
-<!-- Last change: Marked Step 1 (Planning artifacts) complete: ERD confirmed, wireframes drafted, 10 GitHub Issues created and linked to the Project board -->
+<!-- Last change: Marked Step 2 (Solution scaffolding and database connection) complete: connection string via User Secrets, DbContext registered, InitialCreate migration applied against local PostgreSQL -->
 
 # Shepherd's Pies - Implementation Roadmap
 
@@ -18,7 +18,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** the ERD in ARCHITECTURE.md, **When** you review it against the PRD's entity list, **Then** Orders, Employees, Pizzas, Cheese Options, Sauce Options, Toppings, and the pizza-topping join entity are all represented.
   - **Given** the core API functionality list in the PRD, **When** you create GitHub Issues, **Then** each of the 6 API endpoints and each of the 4 frontend views has a corresponding issue, added to the existing Project board.
 
-- [ ] **Step 2: Solution scaffolding and database connection**
+- [x] **Step 2: Solution scaffolding and database connection**
   Create the ASP.NET Core Web API project and the EF Core + Npgsql setup: connection string, `DbContext` registration, and a working `dotnet ef database update` against a local PostgreSQL instance with no tables yet (a smoke test that the pipeline works before modeling real data).
 
   **Acceptance Criteria**:
