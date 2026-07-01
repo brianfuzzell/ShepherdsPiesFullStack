@@ -1,5 +1,5 @@
-<!-- Last updated: 2026-06-30 -->
-<!-- Last change: Marked Step 2 (Solution scaffolding and database connection) complete: connection string via User Secrets, DbContext registered, InitialCreate migration applied against local PostgreSQL -->
+<!-- Last updated: 2026-07-01 -->
+<!-- Last change: Marked Step 3 (Domain models, migrations, and seed data) complete: EF Core models for Size, CheeseOption, SauceOption, Topping, Employee (IdentityUser), Order, Pizza, PizzaTopping; Order's two Employee FKs configured via Fluent API with Restrict delete; DomainModelsAndSeedData migration applied and verified against local PostgreSQL -->
 
 # Shepherd's Pies - Implementation Roadmap
 
@@ -24,7 +24,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   **Acceptance Criteria**:
   - **Given** a local PostgreSQL instance, **When** you run an initial empty migration, **Then** it applies without error and the target database exists.
 
-- [ ] **Step 3: Domain models, migrations, and seed data**
+- [x] **Step 3: Domain models, migrations, and seed data**
   Build out the EF Core models for `Size`, `CheeseOption`, `SauceOption`, `Topping`, `Order`, `Pizza`, `PizzaTopping`, and the `Employee` class extending `IdentityUser`. Configure the two foreign keys from `Order` to `Employee` (order-taker and delivery employee) since both point at the same table. Add seed data for sizes ($10/$12/$15), cheese options, sauce options, and toppings ($0.50 each), and migrate.
 
   **Acceptance Criteria**:
