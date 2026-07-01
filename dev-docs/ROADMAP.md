@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-01 -->
-<!-- Last change: Marked Step 4 (Repository layer) complete: IOrderRepository, IPizzaRepository, IEmployeeRepository, and lookup repositories (Size, CheeseOption, SauceOption, Topping) implemented as async methods against ShepherdsPiesDbContext, registered in Program.cs DI container -->
+<!-- Last change: Marked Step 5 (DTOs and AutoMapper profiles) complete: response/request DTOs added for Order, Pizza, and lookup entities in DTOs/, AutoMapper installed and registered in Program.cs, MappingProfile in Mapping/ computes pizza price and order total at mapping time -->
 
 # Shepherd's Pies - Implementation Roadmap
 
@@ -38,7 +38,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** `IOrderRepository.GetByDate(today)`, **When** called against seeded test orders, **Then** it returns only orders placed on that date, newest first.
   - **Given** `IOrderRepository.GetById(id)`, **When** called, **Then** the returned order includes its associated pizzas.
 
-- [ ] **Step 5: DTOs and AutoMapper profiles**
+- [x] **Step 5: DTOs and AutoMapper profiles**
   Define request and response DTOs for Order, Pizza, and the lookup entities, with data annotations for validation. Configure AutoMapper profiles mapping EF models to response DTOs and request DTOs to EF models. Compute order/pizza totals as a mapped property on the response DTO rather than a stored column.
 
   **Acceptance Criteria**:
