@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-06-30 -->
-<!-- Last change: Added React Bootstrap as the frontend styling library, installed in Step 6 -->
+<!-- Last change: Marked Step 1 (Planning artifacts) complete: ERD confirmed, wireframes drafted, 10 GitHub Issues created and linked to the Project board -->
 
 # Shepherd's Pies - Implementation Roadmap
 
@@ -11,7 +11,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
 
 ## Steps
 
-- [ ] **Step 1: Planning artifacts**
+- [x] **Step 1: Planning artifacts**
   Produce the required pre-coding deliverables: ERD (already drafted in ARCHITECTURE.md, confirm it matches what you'll actually build), wireframes for login, order list, order detail/create, and pizza builder, and GitHub Issues for each user story. The GitHub Project board is already created; link each issue to it as you create it. Create one feature branch per issue as you start its work.
 
   **Acceptance Criteria**:
@@ -54,11 +54,12 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** invalid credentials, **When** submitted via the Login page, **Then** it shows an error and does not navigate away.
 
 - [ ] **Step 7: Orders backend + Order List & Detail/Create views**
-  Backend: implement `POST /api/orders` (dine-in with table number, or delivery), `GET /api/orders?date=yyyy-MM-dd` (defaults to today, newest first), and `GET /api/orders/{id}` (includes its pizzas), wired through `IOrderRepository` and `IMapper`. Verify via Swagger/Postman. Frontend: build the Order List view (filtered by day, defaults to today, newest first) and the Order Detail/Create view (start a new dine-in or delivery order, view an existing order's pizzas and total).
+  Backend: implement `POST /api/orders` (dine-in with table number, or delivery), `GET /api/orders?date=yyyy-MM-dd` (defaults to today, newest first), `GET /api/orders/{id}` (includes its pizzas), and `PUT /api/orders/{id}` (assign/update the delivery employee on a delivery order), wired through `IOrderRepository` and `IMapper`. Verify via Swagger/Postman. Frontend: build the Order List view (filtered by day, defaults to today, newest first) and the Order Detail/Create view (start a new dine-in or delivery order, view an existing order's pizzas and total, and assign a delivery employee on delivery orders).
 
   **Acceptance Criteria**:
   - **Given** no `date` query parameter, **When** you call `GET /api/orders`, **Then** it returns today's orders, newest first.
   - **Given** a dine-in order missing a table number, **When** you call `POST /api/orders`, **Then** the API returns 400.
+  - **Given** a delivery order with no delivery employee assigned, **When** you call `PUT /api/orders/{id}` with a `DeliveryEmployeeId`, **Then** the order's delivery employee is updated and a subsequent `GET` reflects it.
   - **Given** the Order List view loads, **When** no date filter is changed, **Then** it shows today's orders newest first, matching the API default.
   - **Given** a new dine-in order is created through the UI, **When** the form is submitted, **Then** the new order appears in the Order List and its detail view shows a table number and no delivery surcharge.
 
