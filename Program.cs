@@ -13,6 +13,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ShepherdsPiesDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ShepherdsPiesDbConnectionString")));
 
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
+
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IPizzaRepository, PizzaRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
