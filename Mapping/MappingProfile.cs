@@ -33,5 +33,7 @@ public class MappingProfile : Profile
 
         CreateMap<OrderCreateDto, Order>();
         CreateMap<OrderUpdateDto, Order>();
+
+        CreateMap<Employee, EmployeeSummaryDto>();
     }
 }
