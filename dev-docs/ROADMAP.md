@@ -45,7 +45,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** a `Pizza` with a size, cheese, sauce, and three toppings, **When** it's mapped to its response DTO, **Then** the computed price equals size price + (toppings count * $0.50).
   - **Given** an `OrderCreateDto` missing a required field, **When** model binding runs, **Then** validation fails before reaching repository code.
 
-- [ ] **Step 6: Auth backend + React shell + Login page**
+- [x] **Step 6: Auth backend + React shell + Login page**
   Backend: wire up ASP.NET Core Identity with cookie auth (`POST /api/login`, `POST /api/logout`, `GET /api/login/profile`), and seed the `Employee` and `Manager` roles plus at least one account in each role. Verify all three endpoints via Swagger/Postman before moving on. Frontend: scaffold the React app, install `react-bootstrap` and Bootstrap's CSS, add a `fetch` wrapper that sends `credentials: include` on every request, and build the Login page using React Bootstrap form components. On successful login, store the current employee/role (e.g. component state lifted to the app root) so other views can read it.
 
   **Acceptance Criteria**:
