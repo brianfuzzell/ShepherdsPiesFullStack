@@ -16,6 +16,8 @@ public class OrderRepository : IOrderRepository
     public async Task<List<Order>> GetByDateAsync(DateTime date)
     {
         return await _context.Orders
+            .Include(o => o.Employee)
+            .Include(o => o.DeliveryEmployee)
             .Where(o => o.OrderDate.Date == date.Date)
             .OrderByDescending(o => o.OrderDate)
             .ToListAsync();

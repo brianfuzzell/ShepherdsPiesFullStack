@@ -1,5 +1,5 @@
-<!-- Last updated: 2026-07-01 -->
-<!-- Last change: Marked Step 6 (Auth backend + React shell + Login page) complete: ASP.NET Core Identity wired up with cookie auth returning 401/403 for an API instead of redirecting, Employee/Manager roles and one seeded account each, AuthController with /api/login, /api/logout, /api/login/profile, and a React Login page with a credentials-include fetch wrapper and login state lifted to App -->
+<!-- Last updated: 2026-07-02 -->
+<!-- Last change: Marked Step 7 (Orders backend + Order List & Detail/Create views) complete: OrdersController (POST/GET list/GET detail/PUT) plus a small EmployeesController addition for the delivery-employee picker, React ordersManager/employeesManager, and Order List + Order Detail/Create views wired into React Router. Fixed two DateTime.Kind (Local/Unspecified vs UTC) bugs and a missing repository .Include() found during manual verification. Added a Step 8 to-do for cross-view client-side navigation, since Order Detail currently has no way back to Order List besides editing the URL -->
 
 # Shepherd's Pies - Implementation Roadmap
 
@@ -53,7 +53,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** valid credentials entered on the Login page, **When** submitted, **Then** the app navigates past login and the auth cookie persists across a page refresh.
   - **Given** invalid credentials, **When** submitted via the Login page, **Then** it shows an error and does not navigate away.
 
-- [ ] **Step 7: Orders backend + Order List & Detail/Create views**
+- [x] **Step 7: Orders backend + Order List & Detail/Create views**
   Backend: implement `POST /api/orders` (dine-in with table number, or delivery), `GET /api/orders?date=yyyy-MM-dd` (defaults to today, newest first), `GET /api/orders/{id}` (includes its pizzas), and `PUT /api/orders/{id}` (assign/update the delivery employee on a delivery order), wired through `IOrderRepository` and `IMapper`. Verify via Swagger/Postman. Frontend: build the Order List view (filtered by day, defaults to today, newest first) and the Order Detail/Create view (start a new dine-in or delivery order, view an existing order's pizzas and total, and assign a delivery employee on delivery orders).
 
   **Acceptance Criteria**:
@@ -64,13 +64,14 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** a new dine-in order is created through the UI, **When** the form is submitted, **Then** the new order appears in the Order List and its detail view shows a table number and no delivery surcharge.
 
 - [ ] **Step 8: Reference data + Pizza endpoints + Pizza Builder view**
-  Backend: build `SizesController`, `CheeseOptionsController`, `SauceOptionsController`, and `ToppingsController` (thin read-only `GET` endpoints), then `POST /api/orders/{id}/pizzas`, `PUT /api/pizzas/{id}`, and `DELETE /api/pizzas/{id}`. Manually verify pricing across combinations: each size, each topping count, and a delivery order's $5 surcharge. Frontend: build the Pizza Builder view (size, cheese, sauce, toppings, populated from the reference data endpoints) wired to add/update pizzas on an order.
+  Backend: build `SizesController`, `CheeseOptionsController`, `SauceOptionsController`, and `ToppingsController` (thin read-only `GET` endpoints), then `POST /api/orders/{id}/pizzas`, `PUT /api/pizzas/{id}`, and `DELETE /api/pizzas/{id}`. Manually verify pricing across combinations: each size, each topping count, and a delivery order's $5 surcharge. Frontend: build the Pizza Builder view (size, cheese, sauce, toppings, populated from the reference data endpoints) wired to add/update pizzas on an order. Now that all four views exist (Login, Order List, Order Detail/Create, Pizza Builder), add basic client-side navigation (e.g. a nav bar or links) connecting them — currently Order Detail has no way back to Order List except editing the URL.
 
   **Acceptance Criteria**:
   - **Given** a GET request to `/api/sizes` (and the other three lookup routes), **When** called by an authenticated user, **Then** it returns 200 with the seeded lookup values.
   - **Given** a Large pizza with extra cheese and pepperoni, **When** you GET the order detail, **Then** the pizza price is $15.00 + $0.50 + $0.50 = $16.00.
   - **Given** a delivery order with one Medium pizza and no toppings, **When** you GET the order detail, **Then** the order total is $12.00 + $5.00 = $17.00.
   - **Given** the Pizza Builder is used to add a Large pizza with two toppings, **When** saved, **Then** the order detail view's total updates to reflect the new pizza's price.
+  - **Given** the app now has multiple views, **When** a user is on any of them, **Then** they can navigate to the others (e.g. back to Order List) without manually editing the URL.
 
 - [ ] **Step 9: Cancel endpoint + Cancel UI action**
   Backend: implement `DELETE /api/orders/{id}` (cancel, sets `IsCancelled`) restricted to the `Manager` role via `[Authorize(Roles = "Manager")]`. Verify with both an Employee and a Manager account via Swagger/Postman. Frontend: add the cancel-order action to the Order Detail view, visible only when the logged-in user is a Manager.

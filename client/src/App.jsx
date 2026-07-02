@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Login from "./components/Login";
+import OrderList from "./components/OrderList";
+import OrderDetail from "./components/OrderDetail";
 import { getProfile, logout } from "./managers/authManager";
 
 function App() {
@@ -34,14 +37,29 @@ function App() {
 
   return (
     <Container className="mt-4">
-      <h1>Shepherd's Pies</h1>
-      <p>
-        Logged in as {currentEmployee.firstName} {currentEmployee.lastName} (
-        {currentEmployee.role})
-      </p>
-      <Button variant="secondary" onClick={handleLogout}>
-        Log Out
-      </Button>
+      <div className="d-flex justify-content-between align-items-center">
+        <h1>Shepherd's Pies</h1>
+        <div className="text-end">
+          <p className="mb-1">
+            Logged in as {currentEmployee.firstName} {currentEmployee.lastName}{" "}
+            ({currentEmployee.role})
+          </p>
+          <Button variant="secondary" onClick={handleLogout}>
+            Log Out
+          </Button>
+        </div>
+      </div>
+      <Routes>
+        <Route path="/" element={<OrderList />} />
+        <Route
+          path="/orders/new"
+          element={<OrderDetail currentEmployee={currentEmployee} />}
+        />
+        <Route
+          path="/orders/:id"
+          element={<OrderDetail currentEmployee={currentEmployee} />}
+        />
+      </Routes>
     </Container>
   );
 }
