@@ -202,7 +202,10 @@ export default function OrderDetail({ currentEmployee }) {
           {order.pizzas.map((pizza) => (
             <li key={pizza.id}>
               {pizza.size.name} - {pizza.cheeseOption.name} -{" "}
-              {pizza.sauceOption.name} - ${pizza.price.toFixed(2)}{" "}
+              {pizza.sauceOption.name}
+              {pizza.toppings.length > 0 &&
+                ` - ${pizza.toppings.map((topping) => topping.name).join(", ")}`}{" "}
+              - ${pizza.price.toFixed(2)}{" "}
               <Link to={`/orders/${order.id}/pizzas/${pizza.id}`}>Edit</Link>{" "}
               <Button
                 variant="link"

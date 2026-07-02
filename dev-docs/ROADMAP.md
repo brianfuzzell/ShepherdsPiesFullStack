@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-02 -->
-<!-- Last change: Marked Step 9 (Cancel endpoint + Cancel UI action) complete: DELETE /api/orders/{id} restricted to [Authorize(Roles = "Manager")], wired to the existing OrderRepository.CancelAsync, plus a repository-level filter (!o.IsCancelled) so cancelled orders drop out of GetByDateAsync while remaining reachable via GetByIdAsync. React: cancelOrder in ordersManager.js and a Manager-only Cancel Order button on Order Detail that cancels and redirects to the Order List. Verified live via curl with both the Employee (403) and Manager (204, IsCancelled true, order absent from the active list) accounts. -->
+<!-- Last change: Marked Step 10 (End-to-end verification) complete: swept all 6 endpoints plus reference-data endpoints via curl (pricing, validation, role-restricted cancel, soft-delete filtering all correct), walked the full React client (create -> list -> detail -> edit pizza -> assign delivery employee -> cancel) with no console/server errors, and confirmed Book 4 patterns, login/role enforcement, and planning artifacts. Fixed one bug found along the way: OrderDetail.jsx's pizza line item wasn't rendering toppings even though the API DTO included them. -->
 
 # Shepherd's Pies - Implementation Roadmap
 
@@ -82,7 +82,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** a logged-in Employee (non-Manager) viewing an order, **When** the page renders, **Then** no cancel button is shown.
   - **Given** a logged-in Manager viewing an order, **When** they click cancel, **Then** the order is removed from the active Order List.
 
-- [ ] **Step 10: End-to-end verification against success criteria**
+- [x] **Step 10: End-to-end verification against success criteria**
   Walk through every success criterion in the PRD: all 6 endpoints via Swagger/Postman and through the React client, login required end to end, at least one role-restricted action, pricing correct across combinations, and Book 4 patterns (constructor DI, attribute routing, DTOs, data annotation validation) followed throughout. Fix anything that fails before submission.
 
   **Acceptance Criteria**:
