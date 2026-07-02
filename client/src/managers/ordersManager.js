@@ -46,3 +46,13 @@ export const updateOrder = async (id, order) => {
 
   return response.json();
 };
+
+export const cancelOrder = async (id) => {
+  const response = await apiFetch(`/orders/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to cancel order");
+  }
+};

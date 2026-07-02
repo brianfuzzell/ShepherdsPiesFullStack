@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
 import {
+  cancelOrder,
   createOrder,
   getOrderById,
   updateOrder,
@@ -109,6 +110,17 @@ export default function OrderDetail({ currentEmployee }) {
     }
   };
 
+  const handleCancelOrder = async () => {
+    setError("");
+
+    try {
+      await cancelOrder(order.id);
+      navigate("/");
+    } catch {
+      setError("Failed to cancel order.");
+    }
+  };
+
   if (isCreating) {
     return (
       <Container style={{ maxWidth: "500px" }} className="mt-4">
@@ -175,6 +187,12 @@ export default function OrderDetail({ currentEmployee }) {
         <strong>Delivery Employee:</strong>{" "}
         {order.deliveryEmployeeName ?? "Not assigned"}
       </p>
+
+      {currentEmployee.role === "Manager" && (
+        <Button variant="danger" onClick={handleCancelOrder}>
+          Cancel Order
+        </Button>
+      )}
 
       <h4 className="mt-4">Pizzas</h4>
       {order.pizzas.length === 0 ? (
