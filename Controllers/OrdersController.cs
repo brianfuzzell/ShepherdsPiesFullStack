@@ -76,4 +76,18 @@ public class OrdersController : ControllerBase
         var updatedOrder = await _orderRepository.GetByIdAsync(id);
         return Ok(_mapper.Map<OrderResponseDto>(updatedOrder));
     }
+
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
+    public async Task<IActionResult> CancelOrder(int id)
+    {
+        var order = await _orderRepository.GetByIdAsync(id);
+        if (order is null)
+        {
+            return NotFound();
+        }
+
+        await _orderRepository.CancelAsync(id);
+        return NoContent();
+    }
 }

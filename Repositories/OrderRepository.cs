@@ -27,7 +27,7 @@ public class OrderRepository : IOrderRepository
             .Include(o => o.Pizzas)
                 .ThenInclude(p => p.PizzaToppings)
                     .ThenInclude(pt => pt.Topping)
-            .Where(o => o.OrderDate.Date == date.Date)
+            .Where(o => o.OrderDate.Date == date.Date && !o.IsCancelled)
             .OrderByDescending(o => o.OrderDate)
             .ToListAsync();
     }
