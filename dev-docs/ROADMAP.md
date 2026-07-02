@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-01 -->
-<!-- Last change: Marked Step 5 (DTOs and AutoMapper profiles) complete: response/request DTOs added for Order, Pizza, and lookup entities in DTOs/, AutoMapper installed and registered in Program.cs, MappingProfile in Mapping/ computes pizza price and order total at mapping time -->
+<!-- Last change: Marked Step 6 (Auth backend + React shell + Login page) complete: ASP.NET Core Identity wired up with cookie auth returning 401/403 for an API instead of redirecting, Employee/Manager roles and one seeded account each, AuthController with /api/login, /api/logout, /api/login/profile, and a React Login page with a credentials-include fetch wrapper and login state lifted to App -->
 
 # Shepherd's Pies - Implementation Roadmap
 
