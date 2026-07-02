@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-02 -->
-<!-- Last change: Marked Step 8 (Reference data + Pizza endpoints + Pizza Builder view) complete: SizesController/CheeseOptionsController/SauceOptionsController/ToppingsController, PizzasController (POST add/PUT update/DELETE remove), React pizzasManager + four reference-data managers, and the Pizza Builder view wired into React Router with Add/Edit/Remove links from Order Detail and a back-to-Order-List link. Manually verified pricing across size/topping/delivery-surcharge combinations and the EF Core orphan-delete behavior on topping updates. Fixed a missing repository .Include() chain in OrderRepository.GetByDateAsync that was causing Order List totals to show $0/$5 instead of the real pizza-inclusive totals. -->
+<!-- Last change: Marked Step 9 (Cancel endpoint + Cancel UI action) complete: DELETE /api/orders/{id} restricted to [Authorize(Roles = "Manager")], wired to the existing OrderRepository.CancelAsync, plus a repository-level filter (!o.IsCancelled) so cancelled orders drop out of GetByDateAsync while remaining reachable via GetByIdAsync. React: cancelOrder in ordersManager.js and a Manager-only Cancel Order button on Order Detail that cancels and redirects to the Order List. Verified live via curl with both the Employee (403) and Manager (204, IsCancelled true, order absent from the active list) accounts. -->
 
 # Shepherd's Pies - Implementation Roadmap
 
@@ -73,7 +73,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** the Pizza Builder is used to add a Large pizza with two toppings, **When** saved, **Then** the order detail view's total updates to reflect the new pizza's price.
   - **Given** the app now has multiple views, **When** a user is on any of them, **Then** they can navigate to the others (e.g. back to Order List) without manually editing the URL.
 
-- [ ] **Step 9: Cancel endpoint + Cancel UI action**
+- [x] **Step 9: Cancel endpoint + Cancel UI action**
   Backend: implement `DELETE /api/orders/{id}` (cancel, sets `IsCancelled`) restricted to the `Manager` role via `[Authorize(Roles = "Manager")]`. Verify with both an Employee and a Manager account via Swagger/Postman. Frontend: add the cancel-order action to the Order Detail view, visible only when the logged-in user is a Manager.
 
   **Acceptance Criteria**:
