@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-02 -->
-<!-- Last change: Marked Step 7 (Orders backend + Order List & Detail/Create views) complete: OrdersController (POST/GET list/GET detail/PUT) plus a small EmployeesController addition for the delivery-employee picker, React ordersManager/employeesManager, and Order List + Order Detail/Create views wired into React Router. Fixed two DateTime.Kind (Local/Unspecified vs UTC) bugs and a missing repository .Include() found during manual verification. Added a Step 8 to-do for cross-view client-side navigation, since Order Detail currently has no way back to Order List besides editing the URL -->
+<!-- Last change: Marked Step 8 (Reference data + Pizza endpoints + Pizza Builder view) complete: SizesController/CheeseOptionsController/SauceOptionsController/ToppingsController, PizzasController (POST add/PUT update/DELETE remove), React pizzasManager + four reference-data managers, and the Pizza Builder view wired into React Router with Add/Edit/Remove links from Order Detail and a back-to-Order-List link. Manually verified pricing across size/topping/delivery-surcharge combinations and the EF Core orphan-delete behavior on topping updates. Fixed a missing repository .Include() chain in OrderRepository.GetByDateAsync that was causing Order List totals to show $0/$5 instead of the real pizza-inclusive totals. -->
 
 # Shepherd's Pies - Implementation Roadmap
 
@@ -63,7 +63,7 @@ Workflow note: Steps 1-5 build the shared backend foundation (models, repositori
   - **Given** the Order List view loads, **When** no date filter is changed, **Then** it shows today's orders newest first, matching the API default.
   - **Given** a new dine-in order is created through the UI, **When** the form is submitted, **Then** the new order appears in the Order List and its detail view shows a table number and no delivery surcharge.
 
-- [ ] **Step 8: Reference data + Pizza endpoints + Pizza Builder view**
+- [x] **Step 8: Reference data + Pizza endpoints + Pizza Builder view**
   Backend: build `SizesController`, `CheeseOptionsController`, `SauceOptionsController`, and `ToppingsController` (thin read-only `GET` endpoints), then `POST /api/orders/{id}/pizzas`, `PUT /api/pizzas/{id}`, and `DELETE /api/pizzas/{id}`. Manually verify pricing across combinations: each size, each topping count, and a delivery order's $5 surcharge. Frontend: build the Pizza Builder view (size, cheese, sauce, toppings, populated from the reference data endpoints) wired to add/update pizzas on an order. Now that all four views exist (Login, Order List, Order Detail/Create, Pizza Builder), add basic client-side navigation (e.g. a nav bar or links) connecting them — currently Order Detail has no way back to Order List except editing the URL.
 
   **Acceptance Criteria**:
