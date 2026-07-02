@@ -18,6 +18,15 @@ public class OrderRepository : IOrderRepository
         return await _context.Orders
             .Include(o => o.Employee)
             .Include(o => o.DeliveryEmployee)
+            .Include(o => o.Pizzas)
+                .ThenInclude(p => p.Size)
+            .Include(o => o.Pizzas)
+                .ThenInclude(p => p.CheeseOption)
+            .Include(o => o.Pizzas)
+                .ThenInclude(p => p.SauceOption)
+            .Include(o => o.Pizzas)
+                .ThenInclude(p => p.PizzaToppings)
+                    .ThenInclude(pt => pt.Topping)
             .Where(o => o.OrderDate.Date == date.Date)
             .OrderByDescending(o => o.OrderDate)
             .ToListAsync();

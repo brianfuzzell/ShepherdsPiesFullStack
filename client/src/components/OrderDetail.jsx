@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -11,6 +11,7 @@ import {
   updateOrder,
 } from "../managers/ordersManager";
 import { getEmployees } from "../managers/employeesManager";
+import { deletePizza } from "../managers/pizzasManager";
 
 export default function OrderDetail({ currentEmployee }) {
   const { id } = useParams();
@@ -96,10 +97,23 @@ export default function OrderDetail({ currentEmployee }) {
     }
   };
 
+  const handleRemovePizza = async (pizzaId) => {
+    setError("");
+
+    try {
+      await deletePizza(pizzaId);
+      const updatedOrder = await getOrderById(order.id);
+      setOrder(updatedOrder);
+    } catch {
+      setError("Failed to remove pizza.");
+    }
+  };
+
   if (isCreating) {
     return (
       <Container style={{ maxWidth: "500px" }} className="mt-4">
-        <h2 className="mb-4">New Order</h2>
+        <Link to="/">&larr; Back to Order List</Link>
+        <h2 className="mb-4 mt-2">New Order</h2>
         <Form onSubmit={handleCreate}>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form.Group className="mb-3" controlId="orderType">
@@ -147,7 +161,8 @@ export default function OrderDetail({ currentEmployee }) {
 
   return (
     <Container style={{ maxWidth: "600px" }} className="mt-4">
-      <h2 className="mb-4">Order #{order.id}</h2>
+      <Link to="/">&larr; Back to Order List</Link>
+      <h2 className="mb-4 mt-2">Order #{order.id}</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       <p>
         <strong>Type:</strong> {order.orderType}
@@ -169,11 +184,22 @@ export default function OrderDetail({ currentEmployee }) {
           {order.pizzas.map((pizza) => (
             <li key={pizza.id}>
               {pizza.size.name} - {pizza.cheeseOption.name} -{" "}
-              {pizza.sauceOption.name} - ${pizza.price.toFixed(2)}
+              {pizza.sauceOption.name} - ${pizza.price.toFixed(2)}{" "}
+              <Link to={`/orders/${order.id}/pizzas/${pizza.id}`}>Edit</Link>{" "}
+              <Button
+                variant="link"
+                className="p-0 align-baseline"
+                onClick={() => handleRemovePizza(pizza.id)}
+              >
+                Remove
+              </Button>
             </li>
           ))}
         </ul>
       )}
+      <Button as={Link} to={`/orders/${order.id}/pizzas/new`} className="mb-3">
+        Add Pizza
+      </Button>
       <p>
         <strong>Total:</strong> ${order.total.toFixed(2)}
       </p>

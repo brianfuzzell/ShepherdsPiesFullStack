@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Login from "./components/Login";
 import OrderList from "./components/OrderList";
 import OrderDetail from "./components/OrderDetail";
+import PizzaBuilder from "./components/PizzaBuilder";
 import { getProfile, logout } from "./managers/authManager";
 
 function App() {
@@ -38,7 +39,11 @@ function App() {
   return (
     <Container className="mt-4">
       <div className="d-flex justify-content-between align-items-center">
-        <h1>Shepherd's Pies</h1>
+        <h1>
+          <Link to="/" className="text-decoration-none">
+            Shepherd's Pies
+          </Link>
+        </h1>
         <div className="text-end">
           <p className="mb-1">
             Logged in as {currentEmployee.firstName} {currentEmployee.lastName}{" "}
@@ -58,6 +63,11 @@ function App() {
         <Route
           path="/orders/:id"
           element={<OrderDetail currentEmployee={currentEmployee} />}
+        />
+        <Route path="/orders/:orderId/pizzas/new" element={<PizzaBuilder />} />
+        <Route
+          path="/orders/:orderId/pizzas/:pizzaId"
+          element={<PizzaBuilder />}
         />
       </Routes>
     </Container>
